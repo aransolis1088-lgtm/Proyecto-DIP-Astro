@@ -1,0 +1,137 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import Stats from "@components/Stats.astro";
+import ProyectoCard from "@components/ProyectoCard.astro";
+
+// Obtener proyectos destacados
+const todosLosProyectos = await getCollection("proyectos");
+const proyectosDestacados = todosLosProyectos
+  .filter((p) => p.data.destacado)
+  .sort(
+    (a, b) =>
+      b.data.fechaPublicacion.getTime() - a.data.fechaPublicacion.getTime(),
+  )
+  .slice(0, 3);
+
+const servicios = [
+  {
+    titulo: "Construcción Industrial",
+    descripcion: "Naves, bodegas y plantas industriales llave en mano.",
+    icono: "🏭",
+  },
+  {
+    titulo: "Remodelaciones Corporativas",
+    descripcion: "Transformamos espacios de oficina manteniendo operaciones.",
+    icono: "🏢",
+  },
+  {
+    titulo: "Mantenimiento",
+    descripcion: "Mantenimiento preventivo y correctivo de instalaciones.",
+    icono: "🔧",
+  },
+  {
+    titulo: "Diseño y Construcción",
+    descripcion: "Servicio integral desde el concepto hasta la entrega.",
+    icono: "📐",
+  },
+];
+---
+
+<BaseLayout
+  title="Inicio | DIP"
+  description="Empresa contratista especializada en construcción y montaje de equipos especiales."
+>
+  <!-- HERO -->
+  <Hero
+    titulo="Desarrollo Integral De Proyectos"
+    subtitulo="Contratistas con más de 30 años de experiencia en proyectos industriales"
+  />
+
+  <!-- STATS -->
+  <Stats />
+
+  <!-- SERVICIOS -->
+  <section class="section">
+    <div class="container-base">
+      <div class="text-center mb-12">
+        <h2 class="section-title reveal">Lo que hacemos</h2>
+        <p class="section-subtitle reveal">
+          Soluciones integrales de construcción para empresas que buscan calidad
+          y cumplimiento.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {
+          servicios.map((servicio) => (
+            <div class="bg-white p-8 rounded-xl border border-primary-100 hover:border-accent hover:shadow-xl transition-all duration-300 reveal">
+              <div class="text-4xl mb-4">{servicio.icono}</div>
+              <h3 class="text-xl font-bold text-primary-900 mb-2">
+                {servicio.titulo}
+              </h3>
+              <p class="text-primary-600">{servicio.descripcion}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="/servicios" class="btn-secondary">Ver todos los servicios</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTOS DESTACADOS -->
+  {
+    proyectosDestacados.length > 0 && (
+      <section class="section bg-primary-50">
+        <div class="container-base">
+          <div class="text-center mb-12">
+            <h2 class="section-title reveal">Proyectos destacados</h2>
+            <p class="section-subtitle reveal">
+              Algunos de nuestros trabajos más representativos.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {proyectosDestacados.map((proyecto) => (
+              <div class="reveal">
+                <ProyectoCard proyecto={proyecto} />
+              </div>
+            ))}
+          </div>
+
+          <div class="text-center mt-12">
+            <a href="/proyectos" class="btn-primary">
+              Ver todos los proyectos
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- CTA FINAL -->
+  <section class="section bg-primary-900 text-white">
+    <div class="container-base text-center">
+      <h2 class="text-3xl md:text-5xl font-bold mb-6 reveal">
+        ¿Tienes un proyecto en mente?
+      </h2>
+      <p class="text-xl text-primary-200 mb-8 max-w-2xl mx-auto reveal">
+        Cuéntanos sobre tu proyecto y te enviamos una propuesta a medida.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 reveal">
+        <a href="/contacto" class="btn-primary">Solicitar cotización</a>
+        <a
+          href="https://wa.me/5214421234567"
+          target="_blank"
+          class="inline-flex items-center justify-center px-6 py-3 bg-white/10 backdrop-blur text-white font-semibold rounded-lg border-2 border-white/30 hover:bg-white/20 transition-all"
+        >
+          WhatsApp directo
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

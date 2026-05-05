@@ -1,0 +1,137 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const servicios = [
+  {
+    titulo: 'Construcción Industrial',
+    descripcion: 'Naves, bodegas, plantas de producción y centros de distribución. Diseñamos y construimos espacios industriales que optimizan tus operaciones.',
+    icono: '🏭',
+    incluye: [
+      'Estructuras de acero',
+      'Pisos de alta resistencia',
+      'Sistemas de ventilación industrial',
+      'Cumplimiento normativo',
+    ],
+  },
+  {
+    titulo: 'Remodelaciones Corporativas',
+    descripcion: 'Transformamos oficinas y espacios corporativos con mínima interrupción a tus operaciones. Trabajamos en horarios flexibles.',
+    icono: '🏢',
+    incluye: [
+      'Diseño de interiores',
+      'Sistemas eléctricos y de red',
+      'Acabados premium',
+      'Mobiliario corporativo',
+    ],
+  },
+  {
+    titulo: 'Mantenimiento Industrial',
+    descripcion: 'Programas de mantenimiento preventivo y correctivo para que tus instalaciones siempre funcionen al 100%.',
+    icono: '🔧',
+    incluye: [
+      'Mantenimiento preventivo',
+      'Reparaciones de emergencia',
+      'Servicios eléctricos',
+      'Plomería industrial',
+    ],
+  },
+  {
+    titulo: 'Diseño y Construcción Llave en Mano',
+    descripcion: 'Te entregamos tu proyecto completamente terminado y listo para operar. Un solo proveedor desde el concepto hasta la entrega.',
+    icono: '📐',
+    incluye: [
+      'Diseño arquitectónico',
+      'Permisos y licencias',
+      'Construcción completa',
+      'Entrega operativa',
+    ],
+  },
+];
+
+const proceso = [
+  { paso: 1, titulo: 'Contacto y entendimiento', descripcion: 'Nos reunimos para entender tu proyecto, necesidades y objetivos.' },
+  { paso: 2, titulo: 'Propuesta técnica', descripcion: 'Elaboramos una cotización detallada con plazos, costos y especificaciones.' },
+  { paso: 3, titulo: 'Diseño y planeación', descripcion: 'Aprobada la propuesta, generamos planos, cronograma y plan de ejecución.' },
+  { paso: 4, titulo: 'Ejecución', descripcion: 'Comienza la obra con reportes semanales de avance y comunicación constante.' },
+  { paso: 5, titulo: 'Entrega y garantía', descripcion: 'Entregamos el proyecto terminado con la garantía y soporte post-entrega.' },
+];
+---
+
+<BaseLayout
+  title="Servicios | Construcción Industrial y Comercial"
+  description="Servicios integrales de construcción para empresas: industrial, comercial, oficinas, remodelación y mantenimiento."
+>
+  <!-- Hero -->
+  <section class="bg-primary-900 text-white py-24">
+    <div class="container-base text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 reveal">Nuestros servicios</h1>
+      <p class="text-xl text-primary-200 max-w-2xl mx-auto reveal">
+        Soluciones integrales de construcción adaptadas a las necesidades de tu empresa.
+      </p>
+    </div>
+  </section>
+
+  <!-- Lista de servicios -->
+  <section class="section">
+    <div class="container-base">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {servicios.map((servicio) => (
+          <div class="bg-white p-8 rounded-xl border border-primary-100 hover:shadow-xl transition-shadow reveal">
+            <div class="text-5xl mb-4">{servicio.icono}</div>
+            <h2 class="text-2xl font-bold text-primary-900 mb-3">{servicio.titulo}</h2>
+            <p class="text-primary-700 mb-6">{servicio.descripcion}</p>
+            <h3 class="text-sm font-semibold text-accent uppercase mb-3">Incluye:</h3>
+            <ul class="space-y-2">
+              {servicio.incluye.map((item) => (
+                <li class="flex items-start gap-2 text-primary-600">
+                  <span class="text-accent mt-1">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Nuestro proceso -->
+  <section class="section bg-primary-50">
+    <div class="container-base">
+      <div class="text-center mb-12">
+        <h2 class="section-title reveal">Cómo trabajamos</h2>
+        <p class="section-subtitle reveal">
+          Un proceso transparente y estructurado en cada proyecto.
+        </p>
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+        {proceso.map((etapa, idx) => (
+          <div class="flex gap-6 mb-8 reveal">
+            <div class="flex-shrink-0">
+              <div class="w-14 h-14 bg-accent text-white rounded-full flex items-center justify-center text-2xl font-bold">
+                {etapa.paso}
+              </div>
+              {idx < proceso.length - 1 && (
+                <div class="w-0.5 h-12 bg-accent/30 mx-auto mt-2"></div>
+              )}
+            </div>
+            <div class="pt-2">
+              <h3 class="text-xl font-bold text-primary-900 mb-2">{etapa.titulo}</h3>
+              <p class="text-primary-700">{etapa.descripcion}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-primary-900 text-white">
+    <div class="container-base text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">¿Tienes un proyecto en mente?</h2>
+      <p class="text-xl text-primary-200 mb-8">Cuéntanos los detalles y prepararemos una propuesta a medida.</p>
+      <a href="/contacto" class="btn-primary">Solicitar cotización</a>
+    </div>
+  </section>
+</BaseLayout>

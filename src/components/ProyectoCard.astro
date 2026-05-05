@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  proyecto: CollectionEntry<'proyectos'>;
+}
+
+const { proyecto } = Astro.props;
+const { data, slug } = proyecto;
+---
+
+<a
+  href={`/proyectos/${slug}`}
+  class="group block bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+>
+  <div class="img-zoom aspect-[4/3] overflow-hidden">
+    <Image
+      src={data.fotoPortada}
+      alt={data.titulo}
+      class="w-full h-full object-cover"
+      widths={[400, 600, 800]}
+      sizes="(max-width: 768px) 100vw, 33vw"
+    />
+  </div>
+
+  <div class="p-6">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="px-2 py-1 bg-accent/10 text-accent text-xs font-semibold uppercase rounded">
+        {data.tipo}
+      </span>
+      <span class="text-sm text-primary-500">{data.ano}</span>
+    </div>
+
+    <h3 class="text-xl font-bold text-primary-900 mb-2 group-hover:text-accent transition-colors">
+      {data.titulo}
+    </h3>
+
+    <p class="text-primary-600 text-sm mb-4 line-clamp-2">
+      {data.descripcionCorta}
+    </p>
+
+    <div class="flex items-center justify-between text-sm">
+      <span class="text-primary-700 font-medium">{data.cliente}</span>
+      <span class="text-accent font-semibold group-hover:translate-x-1 transition-transform">
+        Ver proyecto →
+      </span>
+    </div>
+  </div>
+</a>

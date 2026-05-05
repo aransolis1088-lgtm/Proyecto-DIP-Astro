@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import ProyectoLayout from '@layouts/ProyectoLayout.astro';
+
+// Genera una página por cada archivo .mdx en src/content/proyectos/
+export async function getStaticPaths() {
+  const proyectos = await getCollection('proyectos');
+  return proyectos.map((proyecto) => ({
+    params: { slug: proyecto.slug },
+    props: { proyecto },
+  }));
+}
+
+const { proyecto } = Astro.props;
+const { Content } = await proyecto.render();
+---
+
+<ProyectoLayout proyecto={proyecto}>
+  <Content />
+</ProyectoLayout>

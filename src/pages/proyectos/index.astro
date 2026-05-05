@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ProyectoCard from '@components/ProyectoCard.astro';
+
+const todosLosProyectos = await getCollection('proyectos');
+
+// Ordenar por fecha más reciente
+const proyectos = todosLosProyectos.sort(
+  (a, b) => b.data.fechaPublicacion.getTime() - a.data.fechaPublicacion.getTime()
+);
+
+// Tipos únicos para los filtros
+const tipos = [...new Set(proyectos.map(p => p.data.tipo))];
+---
+
+<BaseLayout
+  title="Proyectos | Portafolio de Construcción"
+  description="Conoce los proyectos que hemos realizado: construcciones industriales, oficinas corporativas, remodelaciones y más."
+>
+  <!-- Hero -->
+  <section class="bg-primary-900 text-white py-24">
+    <div class="container-base text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 reveal">Nuestros proyectos</h1>
+      <p class="text-xl text-primary-200 max-w-2xl mx-auto reveal">
+        Cada proyecto cuenta una historia. Aquí están las nuestras.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filtros -->
+  <section class="py-8 bg-white border-b border-primary-100 sticky top-20 z-30">
+    <div class="container-base">
+      <div class="flex flex-wrap gap-2 justify-center" id="filtros">
+        <button
+          data-tipo="todos"
+          class="filtro-btn px-4 py-2 rounded-full font-medium bg-primary-900 text-white"
+        >
+          Todos
+        </button>
+        {tipos.map((tipo) => (
+          <button
+            data-tipo={tipo}
+            class="filtro-btn px-4 py-2 rounded-full font-medium bg-primary-100 text-primary-700 hover:bg-primary-200 transition-colors capitalize"
+          >
+            {tipo}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid de proyectos -->
+  <section class="section">
+    <div class="container-base">
+      {proyectos.length === 0 ? (
+        <div class="text-center py-12">
+          <p class="text-xl text-primary-600">
+            Aún no hay proyectos publicados. Vuelve pronto.
+          </p>
+        </div>
+      ) : (
+        <div id="grid-proyectos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {proyectos.map((proyecto) => (
+            <div class="proyecto-item reveal" data-tipo={proyecto.data.tipo}>
+              <ProyectoCard proyecto={proyecto} />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Filtrado de proyectos
+  const setupFiltros = () => {
+    const botones = document.querySelectorAll('.filtro-btn');
+    const proyectos = document.querySelectorAll('.proyecto-item');
+
+    botones.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tipo = btn.getAttribute('data-tipo');
+
+        // Actualizar estilos de botones
+        botones.forEach(b => {
+          b.classList.remove('bg-primary-900', 'text-white');
+          b.classList.add('bg-primary-100', 'text-primary-700');
+        });
+        btn.classList.remove('bg-primary-100', 'text-primary-700');
+        btn.classList.add('bg-primary-900', 'text-white');
+
+        // Filtrar proyectos
+        proyectos.forEach((proyecto) => {
+          const proyectoTipo = proyecto.getAttribute('data-tipo');
+          if (tipo === 'todos' || proyectoTipo === tipo) {
+            (proyecto as HTMLElement).style.display = '';
+          } else {
+            (proyecto as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  };
+
+  setupFiltros();
+  document.addEventListener('astro:page-load', setupFiltros);
+</script>

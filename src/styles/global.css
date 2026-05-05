@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-primary-900 font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold;
+  }
+
+  /* Scrollbar custom */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-primary-50;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary-400 rounded;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-600;
+  }
+}
+
+@layer components {
+  /* Botón primario */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold rounded-lg shadow-md hover:bg-accent-dark hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5;
+  }
+
+  /* Botón secundario */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-white text-primary-900 font-semibold rounded-lg border-2 border-primary-900 hover:bg-primary-900 hover:text-white transition-all duration-300;
+  }
+
+  /* Container con padding consistente */
+  .container-base {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Sección con padding vertical */
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  /* Título de sección */
+  .section-title {
+    @apply text-3xl md:text-5xl font-bold text-primary-900 mb-4;
+  }
+
+  /* Subtítulo de sección */
+  .section-subtitle {
+    @apply text-lg text-primary-600 max-w-2xl mx-auto mb-12;
+  }
+}
+
+@layer utilities {
+  /* Animación al hacer scroll - aplicar con JS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Efecto de imagen con overlay al hover */
+  .img-zoom {
+    @apply overflow-hidden;
+  }
+
+  .img-zoom img {
+    @apply transition-transform duration-700 ease-out;
+  }
+
+  .img-zoom:hover img {
+    @apply scale-110;
+  }
+}
