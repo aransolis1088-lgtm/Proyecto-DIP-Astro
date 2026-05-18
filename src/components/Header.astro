@@ -4,6 +4,7 @@ const navItems = [
   { href: "/nosotros", label: "Nosotros" },
   { href: "/servicios", label: "Servicios" },
   { href: "/proyectos", label: "Proyectos" },
+  { href: "/clientes", label: "Clientes" },
   { href: "/contacto", label: "Contacto" },
 ];
 
@@ -16,8 +17,12 @@ const currentPath = Astro.url.pathname;
   <div class="container-base">
     <nav class="flex items-center justify-between h-20">
       <!-- Logo -->
-      <a href="" class="flex items-center gap-2">
-        <img src="/logo/logo-dip.svg" alt="Logo Empresa" class="h-20 w-auto hover:scale-105 transition transform" />
+      <a href="/" class="flex items-center gap-2">
+        <img
+          src="/logo/logo-dip.svg"
+          alt="Logo Empresa"
+          class="h-20 w-auto hover:scale-105 transition transform"
+        />
       </a>
 
       <!-- Navegacion desktop -->
@@ -96,16 +101,38 @@ const currentPath = Astro.url.pathname;
   </div>
 </header>
 
-<script>
-  const setupMobileMenu = () => {
-    const btn = document.getElementById("mobile-menu-btn");
-    const menu = document.getElementById("mobile-menu");
-    if (btn && menu) {
-      btn.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
-      });
-    }
-  };
-  setupMobileMenu();
-  document.addEventListener("astro:page-load", setupMobileMenu);
+<script is:inline>
+  (function () {
+    // Bandera para evitar duplicar listeners
+    if (window.__mobileMenuSetup) return;
+    window.__mobileMenuSetup = true;
+
+    document.addEventListener("click", function (e) {
+      const target = e.target;
+      if (!target) return;
+
+      // Si el click fue en el boton o algo dentro de el
+      const btn = target.closest("#mobile-menu-btn");
+      if (btn) {
+        const menu = document.getElementById("mobile-menu");
+        if (menu) {
+          menu.classList.toggle("hidden");
+        }
+        return;
+      }
+
+      // Si el click fue en un link del menu movil, cerrar
+      const link = target.closest("#mobile-menu a");
+      if (link) {
+        const menu = document.getElementById("mobile-menu");
+        if (menu) menu.classList.add("hidden");
+      }
+    });
+
+    // Cerrar el menu cuando cambia de pagina con View Transitions
+    document.addEventListener("astro:before-preparation", function () {
+      const menu = document.getElementById("mobile-menu");
+      if (menu) menu.classList.add("hidden");
+    });
+  })();
 </script>

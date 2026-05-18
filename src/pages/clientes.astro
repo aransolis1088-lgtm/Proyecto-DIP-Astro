@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ClientesLogos from "@components/ClientesLogos.astro";
+---
+
+<BaseLayout
+  title="Nuestros Clientes"
+  description="Empresas que confían en nosotros para sus proyectos."
+>
+  <!-- Hero de la pagina -->
+  <section class="bg-primary-900 text-white py-24">
+    <div class="container-base text-center">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 reveal">
+        Nuestros clientes
+      </h1>
+      <p class="text-xl text-primary-200 max-w-2xl mx-auto reveal">
+        Empresas líderes que han confiado en nosotros.
+      </p>
+    </div>
+  </section>
+
+  <!-- Seccion de logos -->
+  <ClientesLogos />
+</BaseLayout>
