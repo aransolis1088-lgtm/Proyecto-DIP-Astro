@@ -5,7 +5,7 @@ const empresa = {
   nombre: "Desarrollo Integral De Proyectos",
   email: "brandlopb@gmail.com",
   email2: "ricardoflores5@prodigy.net.mx",
-  direccion: "Cobre #111 Col. Zona de Oro II C.P. 38020 Celaya, Gto.",
+  direccion: "Celaya, Gto.",
   redes: {
     linkedin: "https://linkedin.com/company/tu-empresa",
     facebook: "https://facebook.com/tu-empresa",
@@ -20,7 +20,11 @@ const empresa = {
       <!-- Columna 1: Logo y descripcion -->
       <div class="md:col-span-2">
         <div class="flex items-center gap-2 mb-4">
-            <img src="/logo/logo-dip-white.svg" alt="Logo Empresa" class="h-14 w-auto bg-white p-2 rounded-full hover:scale-105 transition transform" />
+          <img
+            src="/logo/logo-dip-white.svg"
+            alt="Logo Empresa"
+            class="h-14 w-auto bg-white p-2 rounded-full hover:scale-105 transition transform"
+          />
           <span class="font-display font-bold text-xl text-white">
             {empresa.nombre}
           </span>
@@ -127,7 +131,6 @@ const empresa = {
       class="border-t border-primary-800 mt-12 pt-8 flex flex-col md:flex-row justify-center items-center gap-4 text-sm text-primary-400"
     >
       <p>© {year} {empresa.nombre}. Todos los derechos reservados.</p>
-
     </div>
   </div>
 </footer>
